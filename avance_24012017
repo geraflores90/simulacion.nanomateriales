@@ -1,0 +1,8 @@
+% Programa de histograma de partícula
+
+l=10; % Distancia negatiiva de l
+n=1; % Número de partículas
+d=3; % Dimensión
+a=unifrnd(-l,l,n,d);
+round(a) %Aún no tiene sentido éste comando
+distancia=abs(a)
