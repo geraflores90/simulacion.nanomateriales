@@ -1,7 +1,7 @@
 % Programa de histograma de partícula
 
 l=10; % Distancia de eje
-p=0.5; % Resolución (?) (Falta determinar en qué parte del código se introducirá ésta variable
+p=0.5; % Resolución (?) (Falta determinar en qué parte del código se introducirá ésta variable)
 n=2; % Número de partículas
 d=2; % Dimensión
 
