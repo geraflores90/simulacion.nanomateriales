@@ -14,4 +14,6 @@ for i=1:n
   dist(i)=sqrt(md2);
 end
 
-hist(dist) % Ya se obtiene el histograma con el número de partículas deseadas falta introducir la resolución
+r=round(dist)
+hist(r)
+
