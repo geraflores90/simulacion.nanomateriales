@@ -2,7 +2,7 @@
 clear
 clc
 l=2; % Distancia de eje
-p=1; % Resolución (Determinar en qué parte del código se introducirá ésta variable)
+p=1; % Resolución 
 n=20; % Número de partículas
 d=2; % Dimensión
 
