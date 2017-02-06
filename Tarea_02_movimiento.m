@@ -5,7 +5,7 @@ clc
 l=2; % Distancia de eje
 p=1; % Resolución (Determinar en quÃé parte del código se introducirá ésta 
      % variable)
-n=2; % Número de partículas
+n=3; % Número de partículas
 d=3; % Dimensión
 nm=3; % Número de movimientos que realizará la partícula.
 
@@ -20,18 +20,17 @@ for i=1:n
   end                              
 end
 
-
-
+z=[];
 for i=1:n
     x=zeros(1,d);
     b=randi([1,d],1,1);
     x(1,b)=randi([0,1]);
     if x(1,b)>0
-        x(1,b)=1
+        x(1,b)=1;
     else
-        x(1,b)=-1
+        x(1,b)=-1;
     end 
-   
+z=[z;x] %Matriz aleatoria de unos y ceros.
 end
    
  %se logró crear arreglos de d=3, es necesario concatenarlos de manera
