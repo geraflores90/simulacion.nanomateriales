@@ -11,12 +11,12 @@ nm=3; % Número de movimientos que realizará la partícula.
 
 k=(2*l/p)+1; % Posiciones permitidas
 
-m=round(unifrnd(1,k,n,d)); % Matriz aleatoria de n partículas con d dimensiones 
+m=round(unifrnd(1,k,n,d)) % Matriz aleatoria de n partículas con d dimensiones 
                           % redondeada
 
 for i=1:n
   for j=1:d
-  dist1(i,j)=(m(i,j)-1)*p+(-l); %Asigna la posición en función de p
+  dist(i,j)=(m(i,j)-1)*p+(-l); %Asigna la posición en función de p
   end                              
 end
 
@@ -30,11 +30,13 @@ for i=1:n
     else
         x(1,b)=-1;
     end 
-z=[z;x] %Matriz aleatoria de unos y ceros.
+z=[z;x]; %Matriz aleatoria de unos y ceros.
 end
-   
- %se logró crear arreglos de d=3, es necesario concatenarlos de manera
- %vertical para crear una sola matriz de n x d.
+dist
+mov=dist+z
+
+%Se adicionan las matrices y se genera movimiento, es necesario aún
+%corregir el asunto de las posiciones "prohibidas".
 
 
 % for i=1:nm
