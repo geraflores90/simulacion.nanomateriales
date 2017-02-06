@@ -40,6 +40,8 @@ end
 %Se logra generar una matriz de unos y ceros para dos dimensiones
 %falta generalizar para n dimensiones.
 
+%bibubipi
+
 % for i=1:nm
 % for j=1:d
   
