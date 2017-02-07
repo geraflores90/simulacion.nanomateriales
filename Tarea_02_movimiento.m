@@ -3,15 +3,15 @@
 clear
 clc
 l=2; % Distancia de eje
-p=1; % Resolución (Determinar en quÃé parte del código se introducirá ésta 
+p=1; % Resolución (Determinar en qué parte del código se introducirá ésta 
      % variable)
-n=3; % Número de partículas
-d=3; % Dimensión
+n=2; % Número de partículas
+d=2; % Dimensión
 nm=3; % Número de movimientos que realizará la partícula.
 
 k=(2*l/p)+1; % Posiciones permitidas
 
-m=round(unifrnd(1,k,n,d)) % Matriz aleatoria de n partículas con d dimensiones 
+m=round(unifrnd(1,k,n,d)); % Matriz aleatoria de n partículas con d dimensiones 
                           % redondeada
 
 for i=1:n
@@ -32,9 +32,20 @@ for i=1:n
     end 
 z=[z;x]; %Matriz aleatoria de unos y ceros.
 end
+
 dist
 mov=dist+z
 
+for i=1:n
+    for j=1:d
+        comp=l-abs(mov(i,j))
+        if comp<0
+            comp=comp+2
+            mov(i,j)=comp
+        end
+    end
+end
+mov
 %Se adicionan las matrices y se genera movimiento, es necesario aún
 %corregir el asunto de las posiciones "prohibidas".
 
