@@ -5,8 +5,8 @@ clc
 l=2; % Distancia de eje
 p=1; % Resolución (Determinar en qué parte del código se introducirá ésta 
      % variable)
-n=2; % Número de partículas
-d=2; % Dimensión
+n=3; % Número de partículas
+d=3; % Dimensión
 nm=3; % Número de movimientos que realizará la partícula.
 
 k=(2*l/p)+1; % Posiciones permitidas
@@ -38,23 +38,23 @@ mov=dist+z
 
 for i=1:n
     for j=1:d
-        comp=l-abs(mov(i,j))
+        comp=l-abs(mov(i,j));
+        if mov(i,j)<0
+            nop=-1;
+        else
+            nop=1;
+        end
         if comp<0
-            comp=comp+2
-            mov(i,j)=comp
+            comp=comp+2;
+            mov(i,j)=nop*comp;
         end
     end
 end
 mov
-%Se adicionan las matrices y se genera movimiento, es necesario aún
-%corregir el asunto de las posiciones "prohibidas".
-
 
 % for i=1:nm
 % for j=1:d
   
-  
- 
 % end
   
 
