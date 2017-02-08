@@ -6,7 +6,7 @@ l=5; % Distancia de eje
 p=1; % Resolucion 
 n=10; % Numero de particulas
 d=2; % Dimension
-nm=30; % Numero de movimientos que realizara la particula.
+nm=10; % Numero de movimientos que realizara la particula.
 
 k=(2*l/p)+1; % Posiciones permitidas
 
@@ -64,11 +64,7 @@ for w=1:nm % Repite el numero de movimientos deseado.
 
 end
 
-% for i=1:nm
-% for j=1:d
-  
-% end
-  
+
 
 
 
