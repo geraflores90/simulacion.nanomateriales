@@ -1,5 +1,5 @@
-% Se intetara introducir movimiento a la particula mediante la introduccion de 
-% la variable de t (tiempo)
+% Se detectan colisiones a distintos intervalos.
+
 clear
 clc
 l=4; % Distancia de eje
@@ -63,11 +63,16 @@ for w=1:nm % Repite el numero de movimientos deseado.
   vh = get(gca);
   pause(.1);
   contador = 0;
+  
+  choque=[];
+  
   if n>1
     for i=1:n-1
       for j=(i+1):n
         if (sum(mov(i,:)==mov(j,:)) == d)
           contador=contador+1;
+          crash=mov(i,:); %Choques individuales en la matriz.
+          choque=[choque;crash] %Adjunta los choques individuales en una sola matriz.
         end
       end
     end
