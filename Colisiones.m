@@ -1,10 +1,10 @@
-% Se detectan colisiones a distintos intervalos.
+% Se detectan colisiones a distintos.
 
 clear
 clc
 l=4; % Distancia de eje
 p=1; % Resolucion 
-n=10; % Numero de particulas
+n=15; % Numero de particulas
 d=2; % Dimension
 nm=10; % Numero de movimientos que realizara la particula.
 
@@ -58,9 +58,7 @@ for w=1:nm % Repite el numero de movimientos deseado.
   plot(mov(:,1),mov(:,2),'o','markersize',14); % Intentar generalizar a n dim
   axis([-l l -l l])
   
-  saveas(gcf,strcat('figura',num2str(w),'.jpg'))
-  
-  vh = get(gca);
+  vh = get(gca); % No se que hace xdxdxdxd
   pause(.1);
   contador = 0;
   
@@ -71,12 +69,19 @@ for w=1:nm % Repite el numero de movimientos deseado.
       for j=(i+1):n
         if (sum(mov(i,:)==mov(j,:)) == d)
           contador=contador+1;
-          crash=mov(i,:); %Choques individuales en la matriz.
-          choque=[choque;crash] %Adjunta los choques individuales en una sola matriz.
+          crash=mov(i,:); % Choques individuales en la matriz.
+          choque=[choque;crash] % Adjunta los choques individuales en una sola matriz.
+          hold on
+          plot(choque(:,1),choque(:,2),'x','markersize',14)
+          axis([-l l -l l])
+          plot([0],[0],'ro')
+          hold off
         end
       end
     end
   end
+  
+  saveas(gcf,strcat('figura',num2str(w),'.jpg'))
   
   mov
   contador
