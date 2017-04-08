@@ -2,33 +2,23 @@
 
 clc, clear
 
-r = 2;
-aspa = r - 1.5;
-x = 0: 0.01: 2*r;
-yup = sqrt(r^2 - (x - r).^2) + r;
-ydown = -1 * sqrt(r^2 - (x - r).^2) + r;
+rm = 4;
+rasp = 3;
 
-
-plot(x,yup)
-hold on
-plot(x,ydown)
+theta_m = linspace(0, 2 * pi, 1000); 
+radio_m = linspace(rm, rm, 1000); 
+polar(theta_m, radio_m)
 hold on
 
-aspa1 = x;
-aspa2 = -x + 2*r;
-stirring1 = plot(x,aspa1);
+theta_aspa1 = linspace(0, 0, 1000);
+aspa1 = linspace(-rasp, rasp, 1000);
+polar(theta_aspa1, aspa1)
 hold on 
-stirring2 = plot(x,aspa2);
+
+theta_aspa2 = linspace(pi/2, pi/2, 1000);
+aspa2 = linspace(-rasp, rasp, 1000);
+polar(theta_aspa2, aspa2)
 hold on
-
-for ang=1:360
-  rotate(stirring1,[0 0 1],1);
-  rotate(stirring2,[0 0 1],1);
-  drawnow;
-end
-
-
-
 
 
 
