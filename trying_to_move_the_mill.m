@@ -9,7 +9,7 @@ vel = 0.5; % Valor maximo de paso dimensional permitido.
 pos = unifrnd(0.2 * l, 0.8 * l, n, d); % 0.2 y 0.8 son valores arbitrarios para que las particulas esten dentro del molino. 
 tam = 20 * ones(1, n); % Vector de tamaño para n particulas.
 nmax = 100; % Maximo numero de particulas que pueden existir.
-vel_stirr = 0.1*pi;
+vel_stirr = 0.01*pi;
 
 r_mill = 2;
 r_st = 1.5;
@@ -35,8 +35,8 @@ for i=1:10
   y_s2 = (r_stirr * sin(t2)) + r_mill;
   stirrer = vertcat(horzcat(x_s1,y_s1),horzcat(x_s2,y_s2));
   plot(stirrer(:, 1), stirrer(:, 2), 'o', 'markersize', 1);
-  
   t1 += vel_stirr;
   t2 += vel_stirr;
+  pause(0.5)
   
 endfor
