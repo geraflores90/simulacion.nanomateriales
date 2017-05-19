@@ -2,13 +2,13 @@ clear,clc
 
 l = 4;
 umbral = 0.1;
-n = 1; % Numero de particulas.
+n = 10; % Numero de particulas.
 d = 2; % Numero de dimensiones.
-t = 150; % Numero de pasos.
+t = 50; % Numero de pasos.
 vel = 0.5; % Valor maximo de paso dimensional permitido. STIRRER
 vel_p = zeros(1, n);
 pos = unifrnd(0.2 * l, 0.8 * l, n, d); % 0.2 y 0.8 son valores arbitrarios para que las particulas esten dentro del molino. 
-tam = 20 * ones(1, n); % Vector de tamaño para n particulas.
+tam = 5 * ones(1, n); % Vector de tamaño para n particulas.
 nmax = 100; % Maximo numero de particulas que pueden existir.
 vel_stirr = 0.01*pi;
 theta = zeros(1, n);
@@ -34,6 +34,9 @@ for i = 1:t
   plot(mill(:, 1), mill(:, 2));
   hold on
   for w = 1:n
+    if vel_p(w) > 0.01
+      vel_p(w) -= 0.00001;
+    endif
     deltax = vel_p(w) * cosd(theta(w));
     deltay = vel_p(w) * sind(theta(w));
     delta = horzcat(deltax, deltay);
@@ -95,13 +98,43 @@ for i = 1:t
         endif
     endfor 
   endfor
+  %Inicia colisiones entre particulas.
+  for i = 1 : n - 1
+    for j = (i + 1) : n
+      dis_nn = sqrt(sum((pos(i,:) - pos(j,:)).^2));
+      dif_vel = vel_p(i) - vel_p(j);
+        if dis_nn <= umbral % Colision con otra particula.
+          if dif_vel > 0
+            vel_p(j) = vel_p(i);
+            theta(j) = theta(i) + 5; % Hacer el calculo de la direccion de la particula que manda
+          elseif                 % y en base a ella someter a la particula colisionada. 
+            vel_p(i) = vel_p(j);
+            theta(i) = theta(j) + 5;
+          endif
+        endif
+    endfor
+  endfor
+  %Finalizan colisiones entre particulas.
   % Que no escapen las partículas del cilindro!!!
   for i = 1:n
     for j = 1:sz_mill(1)
       dis_nm = sqrt(sum((pos(i,:) - mill(j,:)).^2));
-        if dis_nm <= 0.3 % Colision con cilindro.
+        if dis_nm <= 0.25 % Colision con cilindro.
           theta(i) += 180;
-        endif
+          dif = 0.25 - dis_nm;
+          if rand() < dif / 0.3 % Fragmentacion aleatoria.
+            ti = tam(i);
+            if ti > 2
+              tam(i) = 1 + randi(ti - 2); % El rompimiento deberia estar en funcion de algo, no debe ser aleatorio.
+              fi = ti - tam(i);
+              tam(sig) = fi;
+              pos(sig, :) = pos(i, :);
+              theta(sig) = theta(i);
+              vel_p(sig) = vel_imp;
+              sig++;
+            endif
+          endif
+        endif % Termina colision con cilindro.
     endfor
   endfor
   n = sig - 1;
