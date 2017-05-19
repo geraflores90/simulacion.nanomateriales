@@ -9,7 +9,6 @@ vel = 0.5; % Valor maximo de paso dimensional permitido. STIRRER
 vel_p = zeros(1, n);
 pos = unifrnd(0.2 * l, 0.8 * l, n, d); % 0.2 y 0.8 son valores arbitrarios para que las particulas esten dentro del molino. 
 tam = 5 * ones(1, n); % Vector de tamaño para n particulas.
-nmax = 100; % Maximo numero de particulas que pueden existir.
 vel_stirr = 0.01*pi;
 theta = zeros(1, n);
 st_spacing = 30;
@@ -22,11 +21,6 @@ yup = sqrt(r_mill^2 - (x - r_mill).^2) + r_mill;
 ydown = -1 * sqrt(r_mill^2 - (x - r_mill).^2) + r_mill;
 mill = vertcat(horzcat(x',yup'),horzcat(x',ydown'));
 sz_mill = size(mill);
-%plot(mill(:, 1), mill(:, 2));
-%hold on
-
-%plot(pos(:, 1), pos(:, 2), 'o', 'markersize', 6);
-%hold on
 
 t1 = 0.25*pi;
 t2 = 0.75*pi;
@@ -106,8 +100,8 @@ for i = 1:t
         if dis_nn <= umbral % Colision con otra particula.
           if dif_vel > 0
             vel_p(j) = vel_p(i);
-            theta(j) = theta(i) + 5; % Hacer el calculo de la direccion de la particula que manda
-          elseif                 % y en base a ella someter a la particula colisionada. 
+            theta(j) = theta(i) + 5; 
+          elseif                  
             vel_p(i) = vel_p(j);
             theta(i) = theta(j) + 5;
           endif
