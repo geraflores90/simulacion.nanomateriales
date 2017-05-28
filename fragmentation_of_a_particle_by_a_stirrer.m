@@ -1,18 +1,19 @@
 clear,clc
-
+tiempo_computo = cputime;
 l = 4;
-umbral = 0.1;
+umbral = 0.2;
 n = 10; % Numero de particulas.
 d = 2; % Numero de dimensiones.
-t = 50; % Numero de pasos.
+t = 60; % Numero de pasos.
 vel = 0.5; % Valor maximo de paso dimensional permitido. STIRRER
 vel_p = zeros(1, n);
 pos = unifrnd(0.2 * l, 0.8 * l, n, d); % 0.2 y 0.8 son valores arbitrarios para que las particulas esten dentro del molino. 
-tam = 5 * ones(1, n); % Vector de tamaño para n particulas.
+tam_ind = 5;
+tam = tam_ind * ones(1, n); % Vector de tamaño para n particulas.
 vel_stirr = 0.01*pi;
 theta = zeros(1, n);
-st_spacing = 30;
-vel_imp = 0.30;
+st_spacing = 50;
+vel_imp = 0.2;
 
 r_mill = 2;
 r_st = 1.5;
@@ -21,15 +22,19 @@ yup = sqrt(r_mill^2 - (x - r_mill).^2) + r_mill;
 ydown = -1 * sqrt(r_mill^2 - (x - r_mill).^2) + r_mill;
 mill = vertcat(horzcat(x',yup'),horzcat(x',ydown'));
 sz_mill = size(mill);
-
+t_inicial = [0 n];
+avg_inicial = [0 tam_ind];
+time = [];
+number_of_particles = [];
+avg_size = [];
 t1 = 0.25*pi;
 t2 = 0.75*pi;
 for i = 1:t
-  plot(mill(:, 1), mill(:, 2));
-  hold on
+  %plot(mill(:, 1), mill(:, 2));
+  %hold on
   for w = 1:n
     if vel_p(w) > 0.01
-      vel_p(w) -= 0.00001;
+      vel_p(w) -= 0.00005;
     endif
     deltax = vel_p(w) * cosd(theta(w));
     deltay = vel_p(w) * sind(theta(w));
@@ -44,21 +49,17 @@ for i = 1:t
   x_s2 = (r_stirr * cos(t2)) + r_mill;
   y_s2 = (r_stirr * sin(t2)) + r_mill;
   stirrer = vertcat(horzcat(x_s1,y_s1),horzcat(x_s2,y_s2));
-  plot(stirrer(:, 1), stirrer(:, 2), 'o', 'markersize', 1);
-  axis([0 l 0 l]);
-  hold on 
+  %plot(stirrer(:, 1), stirrer(:, 2), 'o', 'markersize', 1);
+  %axis([0 l 0 l]);
+  %hold on 
   t1 += vel_stirr;
   t2 += vel_stirr;
   sz = size(stirrer);
-  choque = [];
-  contador = 0;
   sig = n + 1;
   for i = 1:n % Colisiones contra el stirrer. 
     for j = 1:sz(1)
       dis_ns = sqrt(sum((pos(i,:) - stirrer(j,:)).^2));
-        if dis_ns <= umbral % Aqui ya existe una colision. 
-          pos(i,:);
-          stirrer(j,:);
+        if dis_ns <= umbral % Si se cumple, existe una colision contra el impulsor.
           p = stirrer(j,:)-2;
           rad = sqrt(sum(p.^2));
           th = acosd(abs(p(1))/rad);
@@ -132,7 +133,20 @@ for i = 1:t
     endfor
   endfor
   n = sig - 1;
-  plot(pos(:, 1), pos(:, 2), 'o', 'markersize', 5);
-  pause(0.05)
-  hold off
+  %plot(pos(:, 1), pos(:, 2), 'o', 'markersize', 5);
+  %saveas(gcf,strcat('figura',num2str(w),'.jpg'))
+  %pause(0.05)
+  %hold off
+  avg_particles = mean(tam);
+  avg_size = [avg_size;avg_particles];
+  number_of_particles = [number_of_particles;n];
 endfor
+for i = 1:t
+  time = [time;i];
+endfor
+doge = horzcat(time,number_of_particles);
+cate = horzcat(time,avg_size);
+graf1 = vertcat(t_inicial,doge);
+graf2 = vertcat(avg_inicial,cate);
+plotyy(graf1(:, 1), graf1(:, 2),graf2(:, 1), graf2(:, 2))
+printf('Tiempo de procesamiento: %f segundos\n', cputime-tiempo_computo)
